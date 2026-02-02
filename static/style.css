@@ -1,0 +1,141 @@
+/* Global settings */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px; /* wider for desktops */
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 40px 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    max-width: 250px; /* desktop size */
+    width: 80%;       /* scales down on smaller screens */
+    height: auto;     /* maintain aspect ratio */
+}
+
+h2 {
+    text-align: center;
+    color: #1a3c6e; /* Brand color */
+    margin-bottom: 30px;
+}
+
+/* Form rows */
+.form-row {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    justify-content: space-between;
+    flex-wrap: wrap; /* allow wrapping on smaller screens */
+}
+
+.form-row label {
+    width: 30%;
+    font-weight: 600;
+    color: #1a3c6e;
+    min-width: 140px;
+}
+
+.form-row select,
+.form-row input[type="file"] {
+    width: 65%;
+    min-width: 300px; /* ensure full input visibility */
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    background-color: #1a3c6e;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #16305a;
+}
+
+/* Status and download messages */
+#statusMessage,
+.download-message {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #e9f0ff;
+    color: #1a3c6e;
+    margin-bottom: 20px;
+}
+
+.download-message a {
+    color: #1a3c6e;
+    text-decoration: underline;
+}
+
+.download-message a:hover {
+    color: #16305a;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 500px) {
+    .container {
+        padding: 30px 20px;
+    }
+    .logo-container img {
+        max-width: 180px;
+    }
+    .form-row label, .form-row select, .form-row input[type="file"] {
+        width: 100%;
+        min-width: auto;
+        margin-bottom: 10px;
+    }
+}
+
+#drop-zone {
+    border: 2px dashed #bbb;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+#drop-zone.dragover {
+    border-color: #4a90e2;
+    background: #f0f6ff;
+}
+
+#drop-zone input {
+    display: none;
+}
+
+#file-name {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
