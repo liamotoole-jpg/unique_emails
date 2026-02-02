@@ -1,5 +1,6 @@
 flask
 pandas
+requests
 gunicorn
 pytz
-requests
+python-dotenv
