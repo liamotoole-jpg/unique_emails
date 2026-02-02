@@ -12,11 +12,11 @@ app = Flask(__name__)
 # Clients with multiple projects are stored as a list of dictionaries
 CLIENT_MAP = {
     'johnson': [
-        {'project': 'Mike Johnson for Louisiana', 'api_key': os.getenv('MJ_LA_API_KEY'), 'list_id': '3153429'},
-        {'project': 'Mike Johnson for Louisiana NY', 'api_key': os.getenv('MJ_NY_API_KEY'), 'list_id': '3153457'}
+        {'project': 'Mike Johnson for Louisiana', 'api_key': os.getenv('MJ_LA_API_KEY'), 'list_id': os.getenv('MJ_LA_LIST_ID')},
+        {'project': 'Mike Johnson for Louisiana NY', 'api_key': os.getenv('MJ_NY_API_KEY'), os.getenv('MJ_NY_LIST_ID')}
     ],
     'whatley': [
-        {'project': 'Whatley for Senate', 'api_key': os.getenv('WHATLEY_API_KEY'), 'list_id': '8418833'}
+        {'project': 'Whatley for Senate', 'api_key': os.getenv('WHATLEY_API_KEY'), 'list_id': os.getenv('WHATLEY_LIST_ID')}
     ],
     'britt': [
         {'project': 'Britt for Alabama', 'api_key': os.getenv('BRITT_API_KEY'), 'list_id': os.getenv('BRITT_LIST_ID')}
