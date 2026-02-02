@@ -1,0 +1,20 @@
+services:
+  # Web service for donation file processor
+  - type: web
+    name: donation-processor
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn ds_true-up_web:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+
+  # Daily cleanup cron job for uploads folder
+  - type: cron
+    name: cleanup-uploads
+    env: python
+    plan: free
+    schedule: "0 5 * * *"  # daily at 05:00 UTC ≈ midnight EST
+    buildCommand: pip install -r requirements.txt
+    startCommand: python cleanup_uploads.py
