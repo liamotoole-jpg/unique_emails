@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Deduplicator | Convergence Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <script>
+        // Show processing message and hide form on submission
+        function showProcessing() {
+            document.getElementById('uploadForm').style.display = 'none';
+            document.getElementById('statusMessage').style.display = 'block';
+            {% if result %}
+                document.getElementById('resultsContainer').style.display = 'none';
+            {% endif %}
+        }
+
+        // Drag and Drop Logic
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropZone = document.getElementById("drop-zone");
+            const fileInput = document.getElementById("fileInput");
+            const fileName = document.getElementById("file-name");
+        
+            dropZone.addEventListener("click", () => fileInput.click());
+        
+            dropZone.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZone.classList.add("dragover");
+            });
+        
+            dropZone.addEventListener("dragleave", () => {
+                dropZone.classList.remove("dragover");
+            });
+        
+            dropZone.addEventListener("drop", (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("dragover");
+                fileInput.files = e.dataTransfer.files;
+                fileName.textContent = e.dataTransfer.files[0].name;
+            });
+        
+            fileInput.addEventListener("change", () => {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.webp') }}" alt="Convergence Media Logo">
+        </div>
+
+        <h2>Email Deduplication Tool</h2>
+
+        <div id="statusMessage" style="display:none; text-align: center; padding: 20px;">
+            <p>Processing files and calling APIs. Please wait...</p>
+        </div>
+
+        {% if result %}
+            <div id="resultsContainer" class="download-message">
+                <h3>Results for {{ result.client_name }}</h3>
+                <p>Emails from Upload: <strong>{{ "{:,}".format(result.uploaded_count) }}</strong></p>
+                <p>Emails from Iterable (API): <strong>{{ "{:,}".format(result.api_count) }}</strong></p>
+                <hr style="border: 0; border-top: 1px solid #ccc; margin: 15px 0;">
+                <p style="font-size: 1.2em;">Total Unique Emails: <strong>{{ "{:,}".format(result.total_unique) }}</strong></p>
+                <br>
+                <p><a href="{{ url_for('index') }}">Click here to process another file</a></p>
+            </div>
+        {% endif %}
+
+        <form id="uploadForm" method="POST" enctype="multipart/form-data" onsubmit="showProcessing()">
+            
+            <div class="form-row">
+                <label for="client">Client Group:</label>
+                <select name="client" required>
+                    <option value="" disabled selected>Select a client</option>
+                    <option value="johnson">Mike Johnson for Louisiana (incl. NY)</option>
+                    <option value="whatley">Whatley for Senate</option>
+                    <option value="britt">Britt for Alabama</option>
+                    <option value="rogers">Rogers for Senate</option>
+                    <option value="hilton">Steve Hilton for Governor 2026</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label>File Upload:</label>
+                <div id="drop-zone">
+                    <p>Drag & drop the Master CSV here<br>or click to select</p>
+                    <input
+                        type="file"
+                        name="file"
+                        id="fileInput"
+                        accept=".csv"
+                        required
+                    >
+                </div>
+                <span id="file-name" style="text-align: center; display: block; width: 100%; margin-top: 5px; font-style: italic;"></span>
+            </div>
+
+            <input type="submit" value="Calculate Unique Emails">
+        </form>
+
+    </div>
+</body>
+</html>
