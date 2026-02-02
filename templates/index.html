@@ -8,39 +8,33 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     
     <script>
-        // Show processing message and hide form on submission
         function showProcessing() {
             document.getElementById('uploadForm').style.display = 'none';
             document.getElementById('statusMessage').style.display = 'block';
-            {% if result %}
+            if (document.getElementById('resultsContainer')) {
                 document.getElementById('resultsContainer').style.display = 'none';
-            {% endif %}
+            }
         }
 
-        // Drag and Drop Logic
         document.addEventListener("DOMContentLoaded", function () {
             const dropZone = document.getElementById("drop-zone");
             const fileInput = document.getElementById("fileInput");
             const fileName = document.getElementById("file-name");
         
             dropZone.addEventListener("click", () => fileInput.click());
-        
             dropZone.addEventListener("dragover", (e) => {
                 e.preventDefault();
                 dropZone.classList.add("dragover");
             });
-        
             dropZone.addEventListener("dragleave", () => {
                 dropZone.classList.remove("dragover");
             });
-        
             dropZone.addEventListener("drop", (e) => {
                 e.preventDefault();
                 dropZone.classList.remove("dragover");
                 fileInput.files = e.dataTransfer.files;
                 fileName.textContent = e.dataTransfer.files[0].name;
             });
-        
             fileInput.addEventListener("change", () => {
                 if (fileInput.files.length > 0) {
                     fileName.textContent = fileInput.files[0].name;
@@ -51,12 +45,22 @@
 </head>
 <body>
     <div class="container">
-
         <div class="logo-container">
             <img src="{{ url_for('static', filename='logo.webp') }}" alt="Convergence Media Logo">
         </div>
 
         <h2>Email Deduplication Tool</h2>
+
+        <div class="instructions-container">
+            <h3>Instructions</h3>
+            <ol>
+                <li>Navigate to <strong>Nucleus > CRM > Contacts</strong></li>
+                <li>Click <strong>"Actions"</strong> in the top right of the screen and select <strong>"Export"</strong> from the dropdown menu.</li>
+                <li>In the pop up menu, select <strong>Email, Unsubscribed, and Active Subscriber</strong>. Click Next in the bottom right.</li>
+                <li>In the next screen, make sure that the Receiver is set to <strong>"Myself"</strong> and click Export in the bottom right.</li>
+                <li>When the CSV is delivered to your email, download the CSV and upload it in the space below.</li>
+            </ol>
+        </div>
 
         <div id="statusMessage" style="display:none; text-align: center; padding: 20px;">
             <p>Processing files and calling APIs. Please wait...</p>
@@ -75,12 +79,11 @@
         {% endif %}
 
         <form id="uploadForm" method="POST" enctype="multipart/form-data" onsubmit="showProcessing()">
-            
             <div class="form-row">
                 <label for="client">Client Group:</label>
                 <select name="client" required>
                     <option value="" disabled selected>Select a client</option>
-                    <option value="johnson">Mike Johnson for Louisiana</option>
+                    <option value="johnson">Mike Johnson for Louisiana (incl. NY)</option>
                     <option value="whatley">Whatley for Senate</option>
                     <option value="britt">Britt for Alabama</option>
                     <option value="rogers">Rogers for Senate</option>
@@ -91,21 +94,14 @@
             <div class="form-row">
                 <label>File Upload:</label>
                 <div id="drop-zone">
-                    <p>Drag & drop the Master CSV here<br>or click to select</p>
-                    <input
-                        type="file"
-                        name="file"
-                        id="fileInput"
-                        accept=".csv"
-                        required
-                    >
+                    <p>Drag & drop the <strong>CSV from Nucleus CRM</strong> here<br>or click to select</p>
+                    <input type="file" name="file" id="fileInput" accept=".csv" required>
                 </div>
                 <span id="file-name" style="text-align: center; display: block; width: 100%; margin-top: 5px; font-style: italic;"></span>
             </div>
 
             <input type="submit" value="Calculate Unique Emails">
         </form>
-
     </div>
 </body>
 </html>
