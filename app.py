@@ -13,7 +13,7 @@ app = Flask(__name__)
 CLIENT_MAP = {
     'johnson': [
         {'project': 'Mike Johnson for Louisiana', 'api_key': os.getenv('MJ_LA_API_KEY'), 'list_id': os.getenv('MJ_LA_LIST_ID')},
-        {'project': 'Mike Johnson for Louisiana NY', 'api_key': os.getenv('MJ_NY_API_KEY'), os.getenv('MJ_NY_LIST_ID')}
+        {'project': 'Mike Johnson for Louisiana NY', 'api_key': os.getenv('MJ_NY_API_KEY'), 'list_id':os.getenv('MJ_NY_LIST_ID')}
     ],
     'whatley': [
         {'project': 'Whatley for Senate', 'api_key': os.getenv('WHATLEY_API_KEY'), 'list_id': os.getenv('WHATLEY_LIST_ID')}
